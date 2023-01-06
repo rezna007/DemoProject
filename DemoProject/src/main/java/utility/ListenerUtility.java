@@ -34,7 +34,7 @@ public class ListenerUtility {
         if (iTestResult.FAILURE == iTestResult.getStatus()) {
         	takescreenshot(iTestResult.getName());
         }
-        //driver.quit();
+        driver.quit();
     }
 	
 	public String takescreenshot(String name) throws IOException {
