@@ -13,13 +13,11 @@ import org.testng.Assert;
 
 import utility.DropdownUtility;
 import utility.ExcelUtility;
-import utility.ScrollUtility;
 import utility.WaitUtility;
 
 public class ListProductsElements {
 	WebDriver driver;
 	ExcelUtility objExcelUtil;
-	ScrollUtility objScrollUtility=new ScrollUtility();
 	DropdownUtility objDropdown;
 	WaitUtility objWait;
 	ProductsElements objProductsElements;

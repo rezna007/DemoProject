@@ -18,6 +18,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import com.google.common.util.concurrent.Service.Listener;
+
 import PageElements.HomePageElements;
 import PageElements.ListProductsElements;
 import PageElements.ListPurchaseElements;
@@ -27,10 +29,11 @@ import PageElements.PurchaseElements;
 import utility.DropdownUtility;
 import utility.ExcelUtility;
 import utility.LaunchBrowserUtility;
+import utility.ListenerUtility;
 import utility.ScrollUtility;
 import utility.WaitUtility;
 
-public class Purchase {
+public class Purchase extends ListenerUtility{
 	WebDriver driver;
 	LaunchBrowserUtility objLaunchBrowserUtility = new LaunchBrowserUtility();
 	ScrollUtility objScrollUtility = new ScrollUtility();
@@ -40,17 +43,18 @@ public class Purchase {
 	LoginElements objLoginElements;
 	HomePageElements objHomePage;
 	ProductsElements objProductsElements;
-	
 	ListProductsElements objListpdt;
 	PurchaseElements objPurchase;
 	ListPurchaseElements objListPurchase;
 
+	
 	@Test(alwaysRun = true,priority = 1, groups= {"purchase"}, enabled = true, description = "Check add new product button functionality")
 	public void TC017() throws InterruptedException, IOException, AWTException {
 		objLoginElements.loginclick();
 		objHomePage.endtourclick();
 		objPurchase.purchaseClick();
 		objPurchase.addpurchaseClick();
+		//objWait.implicitWait(driver,3);
 		objWait.waitSleep(3000);
 		objPurchase.addnewpdtbtn.click();
 		objWait.waitSleep(2000);
@@ -94,7 +98,7 @@ public class Purchase {
 	public void TC020() throws InterruptedException, IOException, AWTException {
 
 		objPurchase.addnewpdtbtn.click();
-		objWait.waitSleep(2000);
+		objWait.waitSleep(3000);
 		objPurchase.addProduct("Pdt2", "5", "");
 		objPurchase.validateErrorMsg(objProductsElements.exctax0error);
 		objPurchase.close.click();
@@ -126,7 +130,7 @@ public class Purchase {
 		objPurchase.addPurchase();
 		String expectedsavemsg = "Purchase added successfully";
 		String actualsavemsg = objPurchase.savePurchasemsg.getText();
-		objWait.waitSleep(2000);
+		objWait.waitSleep(3000);
 		if (actualsavemsg.equals(expectedsavemsg)) {
 			Assert.assertTrue(true);
 			System.out.println("Purchase added Successfully");
@@ -146,9 +150,7 @@ public class Purchase {
 			sast.assertTrue(true);
 			sast.assertAll();
 		} 
-//		else {
-//			Assert.assertTrue(false);
-//		}
+
 	}
 	@Test(priority = 10, enabled = true, groups= {"listpurchase"}, description = "List Purchase : Check search bar functionality")
 	public void TC026() throws InterruptedException, IOException, AWTException {

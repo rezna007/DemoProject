@@ -19,6 +19,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import io.qameta.allure.Step;
 import utility.ExcelUtility;
 import utility.WaitUtility;
 
@@ -57,25 +58,23 @@ public class LoginElements {
 
 	@FindBy(xpath = "/html/body/div[3]/div/div/div/div[2]/form/div[1]/div/span/strong")
 	public WebElement InvalidUserEmail;
+	
+	
 
+	@Step("Login with valid username and password step...")
 	public void loginclick() throws InterruptedException, IOException {
 		objExcelUtil = new ExcelUtility();
 		String unameString = objExcelUtil.readData(1, 1);
 		String pswdString = objExcelUtil.readData(1, 2);
-
-//		String unameString = "admin";
-//		String pswdString = "123456";	
 		driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
 		UsernameTxt.sendKeys(unameString);
-
 		PasswordTxt.sendKeys(pswdString);
-
 		RememberChkBox.click();
 		LoginBtn.click();
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
 	}
-
+	@Step("Login with invalid username and password step...")
 	public void invalidloginclick() throws InterruptedException, IOException {
 		objExcelUtil = new ExcelUtility();
 		String unameString = objExcelUtil.readData(2, 1);
@@ -88,12 +87,13 @@ public class LoginElements {
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
 	}
-
+	@Step("Getting validation error message step...")
 	public String getTextOfInvalidLoginError() throws InterruptedException {
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 		return Invalidloginerror.getText();
 	}
 
+	
 	public void forgotpwdclick() throws InterruptedException {
 		ForgotPwdLink.click();
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
@@ -103,7 +103,6 @@ public class LoginElements {
 		SendPwdReset.click();
 
 	}
-
 	public void rememberclick() throws InterruptedException {
 		RememberChkBox.click();
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);

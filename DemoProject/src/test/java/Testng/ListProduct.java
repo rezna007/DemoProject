@@ -27,10 +27,11 @@ import PageElements.ProductsElements;
 import utility.DropdownUtility;
 import utility.ExcelUtility;
 import utility.LaunchBrowserUtility;
+import utility.ListenerUtility;
 import utility.ScrollUtility;
 import utility.WaitUtility;
 
-public class ListProduct {
+public class ListProduct extends ListenerUtility{
 	WebDriver driver;
 	LaunchBrowserUtility objLaunchBrowserUtility = new LaunchBrowserUtility();
 	ScrollUtility objScrollUtility = new ScrollUtility();

@@ -23,9 +23,9 @@ import com.google.common.base.Function;
 public class WaitUtility {
 	WebDriver driver;
 
-	public void implicitWait(long i) {
+	public void implicitWait(WebDriver driver, long i) {
 		
-		driver.manage().timeouts().implicitlyWait(i,TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(i));
 	}
 
 	 public WebElement waitForElementTobeVisible(WebDriver driver, WebElement elementToBeLoaded, long i) {

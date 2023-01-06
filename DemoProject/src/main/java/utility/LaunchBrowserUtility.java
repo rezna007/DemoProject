@@ -25,7 +25,7 @@ import com.google.common.io.Files;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class LaunchBrowserUtility {
-	public WebDriver driver;
+	public static WebDriver driver;
 
 	public void launchBrowser(String url, String browser) throws Exception {
 

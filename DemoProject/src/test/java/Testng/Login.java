@@ -20,12 +20,16 @@ import org.testng.asserts.SoftAssert;
 import PageElements.HomePageElements;
 import PageElements.LoginElements;
 import io.opentelemetry.semconv.trace.attributes.SemanticAttributes.FaasTriggerValues;
+import io.qameta.allure.Description;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.Story;
 import utility.ExcelUtility;
 import utility.LaunchBrowserUtility;
 import utility.ListenerUtility;
 import utility.WaitUtility;
 
-public class Login {
+public class Login extends ListenerUtility{
 	WebDriver driver;
 	LaunchBrowserUtility objLaunchBrowserUtility = new LaunchBrowserUtility();
 	LoginElements objLoginElements;
@@ -33,7 +37,10 @@ public class Login {
 	HomePageElements objHomePage;
 	ExcelUtility objExcelUtil;
 
-	@Test(priority = 0, enabled = true, groups= {"Login"},description = "Valid Login Scenario")
+	@Test(priority = 0, enabled = true, groups= {"Login"},description = "Verifying Valid Login Scenario")
+	@Severity(SeverityLevel.BLOCKER)
+	@Description("Test Case Description: Verify login page with valid credetials in Logi Page ")
+	@Story("Story Name: To check login with valid Credentials")
 	public void TC001() throws InterruptedException, IOException {
 
 		objLoginElements.loginclick();
@@ -50,7 +57,10 @@ public class Login {
 
 	}
 
-	@Test(priority = 1, enabled = true,groups= {"Login"}, description = "Invalid Login Scenario")
+	@Test(priority = 1, enabled = true,groups= {"Login"}, description = "Verifying Invalid Login Scenario")
+	@Severity(SeverityLevel.CRITICAL)
+	@Description("Test Case Description: verify login into application with correct credentials")
+	@Story("Story Name: To check login with invalid credentials")
 	public void TC002() throws InterruptedException, IOException {
 
 		objLoginElements.invalidloginclick();

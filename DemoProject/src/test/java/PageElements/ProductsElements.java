@@ -21,13 +21,11 @@ import org.testng.asserts.SoftAssert;
 
 import utility.DropdownUtility;
 import utility.ExcelUtility;
-import utility.ScrollUtility;
 import utility.WaitUtility;
 
 public class ProductsElements {
 	WebDriver driver;
 	ExcelUtility objExcelUtil;
-	ScrollUtility objScrollUtility=new ScrollUtility();
 	DropdownUtility objDropdown=new DropdownUtility();
 	WaitUtility objWait;
 	public ProductsElements(WebDriver driver) {

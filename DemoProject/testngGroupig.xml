@@ -4,18 +4,14 @@
   <test thread-count="3" name="Test">
    <groups>
   <run>  
-    
-    <include name="purchase"></include>
-    <include name="listpurchase"></include>   
-     <include name="AddProduct "></include> 
+        <include name="purchase"></include>
+    <include name="listpurchase"></include>       
   </run>
   </groups>
-    <classes>
-    
-       
+    <classes>      
        <class name="Testng.ListProduct"/>        
        <class name="Testng.Purchase"/>
-       <class name="Testng.AddProduct"/>
+     
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->

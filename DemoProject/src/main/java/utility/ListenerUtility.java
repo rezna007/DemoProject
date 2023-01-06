@@ -12,42 +12,46 @@ import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.io.FileHandler;
+import org.testng.ITestContext;
+import org.testng.ITestResult;
+import org.testng.IRetryAnalyzer;
+import org.testng.annotations.*;
 
 import com.google.common.io.Files;
 
 public class ListenerUtility {
+	
 	public WebDriver driver;
-	
-	
-	@AfterMethod
+		
+	@AfterMethod(alwaysRun =true)
     public void tearDown(ITestResult iTestResult) throws IOException {
         if (iTestResult.FAILURE == iTestResult.getStatus()) {
         	takescreenshot(iTestResult.getName());
         }
-        driver.quit();
+        //driver.quit();
     }
+	
 	public String takescreenshot(String name) throws IOException {
 
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
 	    TakesScreenshot ts = (TakesScreenshot) this.driver;
 	    File source = ts.getScreenshotAs(OutputType.FILE);
-	    String destination = "E:\\EclipseWS_Automation\\SeleniumAutomation\\src\\test\\resources\\screenshots"
+	    String destination = "C:\\Users\\pc\\git\\DemoProject\\DemoProject\\src\\test\\resources\\ScreenShot\\TC_"
 			+name+ dateName + ".png";
 	    System.out.println(destination);
 	    File finalDestination = new File(destination);
 	    FileHandler.copy(source, finalDestination);
 	    return destination;
 	}
-	public void screenshots() throws IOException {
-
-		Date d = new Date();
-		// System.out.println(d.toString());
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-		String date = sdf.format(d);
-		File screenshotFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		File path = new File("E:\\EclipseWS_Automation\\SeleniumAutomation\\src\\test\\resources\\screenshots\\testname"
-				+ date + ".png");
-		Files.copy(screenshotFile, path);
-	}
+	
+	 public WebDriver getDriver() {
+	        return this.driver;
+	    }
 
 }

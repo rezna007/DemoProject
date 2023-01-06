@@ -9,6 +9,7 @@ import PageElements.LoginElements;
 import PageElements.ProductsElements;
 import utility.ExcelUtility;
 import utility.LaunchBrowserUtility;
+import utility.ListenerUtility;
 import utility.ScrollUtility;
 import utility.WaitUtility;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -31,11 +32,11 @@ import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 
-public class AddProduct {
+public class AddProduct extends ListenerUtility {
 	WebDriver driver;
 	LaunchBrowserUtility objLaunchBrowserUtility = new LaunchBrowserUtility();
-	ScrollUtility objScrollUtility = new ScrollUtility();
 	WaitUtility objWait=new WaitUtility();
+	ScrollUtility objScrollUtility=new ScrollUtility();
 	ExcelUtility objExcelUtil;
 	LoginElements objLoginElements;
 	HomePageElements objHomePage;
@@ -54,7 +55,7 @@ public class AddProduct {
 		objProductsElements.addProduct("Pdt1", "21", "230");
 		String expectedsavemsg="Product added successfully";
 		String actualsavemsg=objProductsElements.pdtsavemsg.getText();
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		objWait.implicitWait(driver,2);
 		if(actualsavemsg.equals(expectedsavemsg))
 		{
 			Assert.assertTrue(true);
@@ -72,7 +73,8 @@ public class AddProduct {
 
 		objProductsElements.addpdtClick();
 		objProductsElements.addProduct("", "21", "230");
-		objScrollUtility.scrollToTop(driver);
+		//objScrollUtility.scrollToElement(objProductsElements.productname);
+		objWait.waitForElementTobeVisible(driver, objProductsElements.productname, 3);
 		objProductsElements.validateErrorMsg(objProductsElements.productnameerror);
 	}
 
@@ -98,8 +100,7 @@ public class AddProduct {
 		}
 	@Test(priority = 6, enabled = true, groups= {"AddProduct"},description = "Add a new Unit")
 	public void TC010() throws InterruptedException, IOException, AWTException {
-		
-		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+		objWait.implicitWait(driver,4);
 		objProductsElements.addpdtClick();
 		objProductsElements.addUnit("EdgeUnit"," EdgeBoxUnit");
 		}
