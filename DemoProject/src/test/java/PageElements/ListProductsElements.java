@@ -44,9 +44,9 @@ public class ListProductsElements {
 	public WebElement nomatchfoundmsg;
 	
 	// check box of the item to be deleted here:01Apple
-	@FindBy(xpath= "//div[@class='table-responsive']/div/table/tbody/tr[5]/td/input") 
+	@FindBy(xpath= "//div[@class='table-responsive']/div/table/tbody/tr[6]/td/input") 
 	public WebElement chkbox01Apple;	
-	@FindBy(xpath= "//*[@id=\"product_table\"]/tbody/tr[5]/td[3]")
+	@FindBy(xpath= "//*[@id=\"product_table\"]/tbody/tr[6]/td[3]")
 	public WebElement deleteitem01Apple; 
 	
 	

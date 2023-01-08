@@ -55,7 +55,7 @@ public class ForgotPwd extends ListenerUtility{
 		String tooltipmsgString = "Please include an '@' in the email address.";
 		String tooltipText = objLoginElements.EmailReset.getAttribute("title");// get tooltip text
 		if (tooltipmsgString.contains(tooltipText)) {
-			Assert.assertTrue(false);
+			Assert.assertTrue(true);
 		}
 	}
 

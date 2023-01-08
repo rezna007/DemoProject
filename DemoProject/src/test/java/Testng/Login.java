@@ -13,6 +13,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -27,8 +28,11 @@ import io.qameta.allure.Story;
 import utility.ExcelUtility;
 import utility.LaunchBrowserUtility;
 import utility.ListenerUtility;
+import utility.TestAllureListener;
 import utility.WaitUtility;
 
+
+@Listeners({TestAllureListener.class})
 public class Login extends ListenerUtility{
 	WebDriver driver;
 	LaunchBrowserUtility objLaunchBrowserUtility = new LaunchBrowserUtility();
@@ -36,12 +40,13 @@ public class Login extends ListenerUtility{
 	WaitUtility ObjWait;
 	HomePageElements objHomePage;
 	ExcelUtility objExcelUtil;
-
+	
+	
 	@Test(priority = 0, enabled = true, groups= {"Login"},description = "Verifying Valid Login Scenario")
 	@Severity(SeverityLevel.BLOCKER)
 	@Description("Test Case Description: Verify login page with valid credetials in Logi Page ")
 	@Story("Story Name: To check login with valid Credentials")
-	public void TC001() throws InterruptedException, IOException {
+	public void TC000() throws InterruptedException, IOException {
 
 		objLoginElements.loginclick();
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
@@ -59,9 +64,9 @@ public class Login extends ListenerUtility{
 
 	@Test(priority = 1, enabled = true,groups= {"Login"}, description = "Verifying Invalid Login Scenario")
 	@Severity(SeverityLevel.CRITICAL)
-	@Description("Test Case Description: verify login into application with correct credentials")
+	@Description("Test Case Description: verify login with invalid credentials and validate error message")
 	@Story("Story Name: To check login with invalid credentials")
-	public void TC002() throws InterruptedException, IOException {
+	public void TC001() throws InterruptedException, IOException {
 
 		objLoginElements.invalidloginclick();
 		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
@@ -75,7 +80,25 @@ public class Login extends ListenerUtility{
 			
 		}
 	}
-
+	@Test(priority = 2, enabled = true, groups= {"Login"},description = "Verifying Incorrect Login for Allure report")
+	@Severity(SeverityLevel.BLOCKER)
+	@Description("Test Case Description: verify login with invalid credentials and validate  wrong error message")
+	@Story("Story Name: To Check invalid login error msg for Allure Report")
+	public void TC002() throws InterruptedException, IOException {
+		
+		objLoginElements.invalidloginclick();
+		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+		if (objLoginElements.getTextOfInvalidLoginError().contains("These credentials do not match our records123.")) {
+			SoftAssert sast = new SoftAssert();
+			sast.assertTrue(true);
+			System.out.println("Invalid Credentials");
+			sast.assertAll();
+		} else {
+			Assert.assertTrue(false, "Logged in with invalid credentials");
+			
+		}
+	}
+	
 	@BeforeTest
 	@Parameters("browser")
 	public void beforeTest(String browser) throws Exception {

@@ -214,11 +214,10 @@ public class Purchase extends ListenerUtility{
 				//System.out.println("Purchase Found-TC030");
 				Assert.assertTrue(true);
 				objListPurchase.searchpurchase.clear();
-				break;
+				break;				
 			}
 		}
 	
-		System.out.println("Purchase not Found");
 	}
 	@DataProvider (name = "Search")
 	  public Object[][] dpMethod(){

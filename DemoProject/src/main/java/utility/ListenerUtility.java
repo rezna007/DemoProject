@@ -25,33 +25,35 @@ import org.testng.annotations.*;
 
 import com.google.common.io.Files;
 
+
 public class ListenerUtility {
 	
 	public WebDriver driver;
-		
+	LaunchBrowserUtility objLaunchBrowserUtility = new LaunchBrowserUtility();
+	
+	
 	@AfterMethod(alwaysRun =true)
     public void tearDown(ITestResult iTestResult) throws IOException {
+		this.driver=objLaunchBrowserUtility.driver;
         if (iTestResult.FAILURE == iTestResult.getStatus()) {
         	takescreenshot(iTestResult.getName());
         }
-        driver.quit();
+        //driver.quit();
     }
 	
 	public String takescreenshot(String name) throws IOException {
-
+		this.driver=objLaunchBrowserUtility.driver;
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
 	    TakesScreenshot ts = (TakesScreenshot) this.driver;
 	    File source = ts.getScreenshotAs(OutputType.FILE);
 	    String destination = "C:\\Users\\pc\\git\\DemoProject\\DemoProject\\src\\test\\resources\\ScreenShot\\TC_"
-			+name+ dateName + ".png";
+			+name+ "_"+ dateName + ".png";
 	    System.out.println(destination);
 	    File finalDestination = new File(destination);
 	    FileHandler.copy(source, finalDestination);
 	    return destination;
 	}
 	
-	 public WebDriver getDriver() {
-	        return this.driver;
-	    }
+	 
 
 }

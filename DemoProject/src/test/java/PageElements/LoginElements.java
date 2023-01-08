@@ -26,6 +26,7 @@ import utility.WaitUtility;
 public class LoginElements {
 	WebDriver driver;
 	ExcelUtility objExcelUtil;
+	HomePageElements objHomePageElement;
 
 	public LoginElements(WebDriver driver) {
 		this.driver = driver;
@@ -33,10 +34,10 @@ public class LoginElements {
 	}
 
 	@FindBy(xpath = "//*[@id=\"username\"]")
-	public WebElement UsernameTxt;
+	private WebElement UsernameTxt;
 
 	@FindBy(xpath = "//*[@id=\"password\"]")
-	public WebElement PasswordTxt;
+	private WebElement PasswordTxt;
 
 	@FindBy(xpath = "/html/body/div[3]/div/div/div/div[2]/form/div[4]/div/button")
 	public WebElement LoginBtn;
@@ -72,6 +73,7 @@ public class LoginElements {
 		RememberChkBox.click();
 		LoginBtn.click();
 		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		
 
 	}
 	@Step("Login with invalid username and password step...")
