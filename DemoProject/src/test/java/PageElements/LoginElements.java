@@ -34,10 +34,10 @@ public class LoginElements {
 	}
 
 	@FindBy(xpath = "//*[@id=\"username\"]")
-	private WebElement UsernameTxt;
+	public WebElement UsernameTxt;
 
 	@FindBy(xpath = "//*[@id=\"password\"]")
-	private WebElement PasswordTxt;
+	public WebElement PasswordTxt;
 
 	@FindBy(xpath = "/html/body/div[3]/div/div/div/div[2]/form/div[4]/div/button")
 	public WebElement LoginBtn;
