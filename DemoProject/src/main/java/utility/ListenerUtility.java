@@ -36,12 +36,12 @@ public class ListenerUtility {
     public void tearDown(ITestResult iTestResult) throws IOException {
 		this.driver=objLaunchBrowserUtility.driver;
         if (iTestResult.FAILURE == iTestResult.getStatus()) {
-        	takescreenshot(iTestResult.getName());
+        	saveScreenshotPNG(iTestResult.getName());
         }
         //driver.quit();
     }
 	
-	public String takescreenshot(String name) throws IOException {
+	public String saveScreenshotPNG(String name) throws IOException {
 		this.driver=objLaunchBrowserUtility.driver;
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
 	    TakesScreenshot ts = (TakesScreenshot) this.driver;

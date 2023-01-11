@@ -29,7 +29,6 @@ public class ListProductsElements {
 
 	@FindBy(xpath = "//*[@id=\"tour_step5\"]/ul/li[1]/a")
 	public WebElement listproductstab;
-	
 
 	@FindBy(xpath = "//*[@id=\"product_table\"]")
 	public WebElement listewebtable;
@@ -46,8 +45,9 @@ public class ListProductsElements {
 	// check box of the item to be deleted here:01Apple
 	@FindBy(xpath= "//div[@class='table-responsive']/div/table/tbody/tr[6]/td/input") 
 	public WebElement chkbox01Apple;	
-	@FindBy(xpath= "//*[@id=\"product_table\"]/tbody/tr[6]/td[3]")
+	@FindBy(xpath="//div[@id=\"product_table_wrapper\"]/table/tbody/tr[6]/td[3]")
 	public WebElement deleteitem01Apple; 
+	//*[@id=\"product_table\"]/tbody/tr[6]/td[3]
 	
 	
 	@FindBy(xpath= "//*[@id=\"delete-selected\"]")
