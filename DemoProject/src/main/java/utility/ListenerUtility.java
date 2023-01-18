@@ -1,9 +1,12 @@
 package utility;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -30,30 +33,26 @@ public class ListenerUtility {
 	
 	public WebDriver driver;
 	LaunchBrowserUtility objLaunchBrowserUtility = new LaunchBrowserUtility();
-	
-	
+	public static String path = System.getProperty("user.dir");
+
 	@AfterMethod(alwaysRun =true)
     public void tearDown(ITestResult iTestResult) throws IOException {
 		this.driver=objLaunchBrowserUtility.driver;
         if (iTestResult.FAILURE == iTestResult.getStatus()) {
         	saveScreenshotPNG(iTestResult.getName());
         }
-        //driver.quit();
+ 
     }
-	
 	public String saveScreenshotPNG(String name) throws IOException {
 		this.driver=objLaunchBrowserUtility.driver;
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
 	    TakesScreenshot ts = (TakesScreenshot) this.driver;
 	    File source = ts.getScreenshotAs(OutputType.FILE);
-	    String destination = "C:\\Users\\pc\\git\\DemoProject\\DemoProject\\src\\test\\resources\\ScreenShot\\TC_"
-			+name+ "_"+ dateName + ".png";
+	    String path = System.getProperty("user.dir");
+	    String destination =path+"\\src\\test\\resources\\ScreenShot"+name+ "_"+ dateName + ".png";		
 	    System.out.println(destination);
 	    File finalDestination = new File(destination);
 	    FileHandler.copy(source, finalDestination);
 	    return destination;
 	}
-	
-	 
-
 }

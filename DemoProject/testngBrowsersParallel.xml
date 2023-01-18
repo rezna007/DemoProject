@@ -6,7 +6,7 @@
 <listener class-name="utility.TestAllureListener" />
 </listeners>
 
-	<test thread-count="5" name="FireFox">
+	<test thread-count="5" name="FireFoxTest">
 		<parameter name="browser" value="firefox"></parameter>
 		<classes>
 			<class name="Testng.Login" />

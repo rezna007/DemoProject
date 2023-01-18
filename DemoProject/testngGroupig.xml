@@ -4,8 +4,8 @@
   <test thread-count="2" name="Test">
    <groups>
   <run>  
-        <include name="purchase"></include>
-    <include name="listpurchase"></include>       
+    <include name="smoke"></include>
+    <include name="regression"></include>       
   </run>
   </groups>
     <classes>      

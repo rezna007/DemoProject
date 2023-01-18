@@ -1,5 +1,7 @@
 package PageElements;
 
+import static org.testng.Assert.assertTrue;
+
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -21,13 +23,15 @@ import org.testng.asserts.SoftAssert;
 
 import utility.DropdownUtility;
 import utility.ExcelUtility;
+import utility.PageUtilities;
 import utility.WaitUtility;
 
-public class ProductsElements {
+public class ProductsElements extends PageUtilities {
 	WebDriver driver;
 	ExcelUtility objExcelUtil;
-	DropdownUtility objDropdown=new DropdownUtility();
-	WaitUtility objWait;
+	DropdownUtility objDropdown = new DropdownUtility();
+	WaitUtility objWait = new WaitUtility();
+
 	public ProductsElements(WebDriver driver) {
 		this.driver = driver;
 		PageFactory.initElements(driver, this);
@@ -37,195 +41,147 @@ public class ProductsElements {
 	public WebElement products;
 	@FindBy(xpath = "//*[@id=\"product_add_form\"]/div[1]/div/div/div[1]/div/label")
 	public WebElement productnamelabel;
-@FindBy(xpath = "//*[@id=\"tour_step5\"]/ul/li[2]/a")
+	@FindBy(xpath = "//*[@id=\"tour_step5\"]/ul/li[2]/a")
 	public WebElement addproducts;
-
 	@FindBy(xpath = "//*[@id=\"name\"]")
 	public WebElement productname;
 	@FindBy(xpath = "//*[@id=\"name-error\"]")
 	public WebElement productnameerror;
-
 	@FindBy(id = "select2-brand_id-container")
 	public WebElement brand;
 	@FindBy(xpath = "//ul[@class='select2-results__options']/li[4]")
 	public WebElement selectbrand;
-
 	@FindBy(id = "select2-unit_id-container")
 	public WebElement unit;
 	@FindBy(xpath = "//ul[@class='select2-results__options']/li[3]")
 	public WebElement selectunit;
-
 	@FindBy(id = "select2-category_id-container")
 	public WebElement category;
- @FindBy(xpath = "//ul[@class='select2-results__options']/li[3]")
+	@FindBy(xpath = "//ul[@class='select2-results__options']/li[3]")
 	public WebElement selectcategory;
-
 	@FindBy(id = "select2-sub_category_id-container")
 	public WebElement subcategory;
-@FindBy(xpath = "//ul[@class='select2-results__options']/li[2]")
+	@FindBy(xpath = "//ul[@class='select2-results__options']/li[2]")
 	public WebElement selectsubcategory;
-
 	@FindBy(xpath = "//*[@id=\"alert_quantity\"]")
 	public WebElement alertqnty;
-	@FindBy(xpath ="//*[@id=\"alert_quantity-error\"]")
+	@FindBy(xpath = "//*[@id=\"alert_quantity-error\"]")
 	public WebElement alertqntyerror;
-
 	@FindBy(xpath = "//*[@id=\"upload_image\"]")
 	public WebElement browse;
-
 	@FindBy(xpath = "//*[@id=\"single_dpp\"]")
-	public WebElement exctax0;	
-	@FindBy(xpath ="//*[@id=\"single_dpp-error\"]")
+	public WebElement exctax0;
+	@FindBy(xpath = "//*[@id=\"single_dpp-error\"]")
 	public WebElement exctax0error;
 	@FindBy(xpath = "//*[@id=\"single_dpp_inc_tax\"]")
 	public WebElement inctax;
 	@FindBy(xpath = "//*[@id=\"single_dsp\"]")
 	public WebElement exctax1;
-
 	@FindBy(xpath = "//*[@id=\"product_add_form\"]/div[4]/div/div/div/button[4]")
 	public WebElement save;
-	
-	@FindBy(xpath ="//*[@id=\"product_add_form\"]/div[1]/div/div/div[2]/div/div/span[2]/button/i")
+	@FindBy(xpath = "//*[@id=\"product_add_form\"]/div[1]/div/div/div[2]/div/div/span[2]/button/i")
 	public WebElement addbrand;
-	@FindBy(xpath ="//input[@class='form-control' and @placeholder='Brand name']")
+	@FindBy(xpath = "//input[@class='form-control' and @placeholder='Brand name']")
 	public WebElement newbrand;
 //	@FindBy(xpath ="//*[@id=\"description\"]")
 //	public WebElement branddescription;
-	@FindBy(xpath ="//button[@class='btn btn-primary' and @type='submit']")
+	@FindBy(xpath = "//button[@class='btn btn-primary' and @type='submit']")
 	public WebElement savebrand;
-	
-	@FindBy(xpath ="//*[@id=\"product_add_form\"]/div[1]/div/div/div[3]/div/div/span[2]/button")
-	public WebElement adduniticon;	
-	@FindBy(xpath ="//*[@id=\"actual_name\"]")
-	public WebElement newunitname;	
-    @FindBy(xpath =" //*[@id=\"short_name\"]")
-	public WebElement  newunitshortname;  
-	@FindBy(xpath ="//*[@id=\"allow_decimal\"]")
-	public WebElement allowDecimal;	
-	@FindBy(xpath ="//*[@id=\"quick_add_unit_form\"]/div[3]/button[1]")
+	@FindBy(xpath = "//*[@id=\"product_add_form\"]/div[1]/div/div/div[3]/div/div/span[2]/button")
+	public WebElement adduniticon;
+	@FindBy(xpath = "//*[@id=\"actual_name\"]")
+	public WebElement newunitname;
+	@FindBy(xpath = " //*[@id=\"short_name\"]")
+	public WebElement newunitshortname;
+	@FindBy(xpath = "//*[@id=\"allow_decimal\"]")
+	public WebElement allowDecimal;
+	@FindBy(xpath = "//*[@id=\"quick_add_unit_form\"]/div[3]/button[1]")
 	public WebElement saveunit;
-	
-	@FindBy(xpath ="//*[@id=\"toast-container\"]/div/div")
+	@FindBy(xpath = "//*[@id=\"toast-container\"]/div/div")
 	public WebElement pdtsavemsg;
 
+	public void addProduct(String name, String qnty, String tax)
+			throws InterruptedException, IOException, AWTException {
 
-
-	public void addProduct(String name,String qnty,String tax) throws InterruptedException, IOException, AWTException {
-		
-		pdtName(name);		
-		brand.click();
-		selectbrand.click();
-		unitDetails();		
-//		category.click();
-//		selectcategory.click();
-//		subcategory.click();
-//		selectsubcategory.click();
+		pdtName(name);
+		clickOnElement(brand);
+		clickOnElement(selectbrand);
+		unitDetails();
 		alertQnty(qnty);
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-		browse.sendKeys("E:\\Upload.PNG");
+		objWait.waitSleep(3000);
+		sendKey(browse, "E:\\Upload.PNG");
 		taxDetails(tax);
 		save();
-		// browse.click();
-		// uploadfile();	
 	}
+	public void pdtClick() {
+		clickOnElement(products);
+		objWait.waitSleep(2000);
+	}
+	public void addpdtClick() {
+		clickOnElement(addproducts);
+	}
+	public void pdtName(String name) throws InterruptedException {
 
-	public void pdtClick()
-	{
-		products.click();
+		clickOnElement(productname);
+		objWait.waitSleep(3000);
+		sendKey(productname, name);
 	}
-	public void addpdtClick()
-	{
-		
-		addproducts.click();
-	}
-	public void pdtName(String name) throws InterruptedException
-	{
-		productname.click();
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-		productname.sendKeys(name);
-	}
-	
-	public void unitDetails()
-	{
-		unit.click();
-		selectunit.click();
-	}
-	public void alertQnty(String qnty)
-	{
-		alertqnty.sendKeys(qnty);
-	}
-	public void taxDetails(String tax) throws InterruptedException
-	{
-		exctax0.sendKeys(tax);		
-		inctax.sendKeys(tax);		
-		exctax1.sendKeys(tax);
-		
-	}
-	public void save()
-	{
-		save.click();
-	}
-	public void validateErrorMsg(WebElement element) throws InterruptedException
-	{
-		if (element.getText().equals("This field is required.")) {
-			SoftAssert softAssert = new SoftAssert();
-			softAssert.assertTrue(true);
-			softAssert.assertAll();
-		} else {
+	public void unitDetails() {
 
-			Assert.assertTrue(false);
+		clickOnElement(unit);
+		clickOnElement(selectunit);
+	}
+	public void alertQnty(String qnty) {
+
+		sendKey(alertqnty, qnty);
+	}
+	public void taxDetails(String tax) throws InterruptedException {
+		sendKey(exctax0, tax);
+		sendKey(inctax, tax);
+		sendKey(exctax1, tax);
+	}
+	public void save() {
+		clickOnElement(save);
+	}
+	public boolean validateErrorMsg(WebElement element) throws InterruptedException {
+
+		if (getElementText(element).equals("This field is required.")) {
+
+			System.out.println("Expected validation msg shown");
+			return true;
 		}
-		
+		return false;
 	}
-	public void addBrand(String Brandname,String Description) throws InterruptedException
-	{
-		addbrand.click();
-		newbrand.click();
-		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-		newbrand.sendKeys(Brandname);
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-		savebrand.click();
+	public void addBrand(String Brandname, String Description) throws InterruptedException {
+		clickOnElement(addbrand);
+		clickOnElement(newbrand);
+		objWait.waitSleep(4000);
+		sendKey(newbrand, Brandname);
+		objWait.waitSleep(3000);
+		clickOnElement(savebrand);
+
 	}
-	public void addUnit(String Unitname,String Shortname) throws InterruptedException
-	{
-		adduniticon.click();
-		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-		newunitname.click();
-		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-		newunitname.sendKeys(Unitname);
-		newunitshortname.click();
-		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-		newunitshortname.sendKeys(Shortname);
-		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+
+	public void addUnit(String Unitname, String Shortname) throws InterruptedException {
+
+		clickOnElement(adduniticon);
+		objWait.waitSleep(4000);
+		clickOnElement(newunitname);
+		objWait.waitSleep(4000);
+		sendKey(newunitname, Unitname);
+		clickOnElement(newunitshortname);
+		objWait.waitSleep(4000);
+		sendKey(newunitshortname, Shortname);
+		objWait.waitSleep(4000);
 		objDropdown.dropdownbytext(allowDecimal, "Yes");
-		saveunit.click();
-	}
-	public void uploadfile() throws AWTException, InterruptedException
-	{
-		Robot rb = new Robot();
-		 
-	    // copying File path to Clipboard
-		 StringSelection str = new StringSelection("E:\\Upload.PNG");
-		    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
-		 
-		     // press Contol+V for pasting
-		     rb.keyPress(KeyEvent.VK_CONTROL);
-		     rb.keyPress(KeyEvent.VK_V);
-		     driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-		 
-		    // release Contol+V for pasting
-		    rb.keyRelease(KeyEvent.VK_CONTROL);
-		    rb.keyRelease(KeyEvent.VK_V);
-		    driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-		 
-		    // for pressing and releasing Enter
-		    rb.keyPress(KeyEvent.VK_ENTER);
-		    rb.keyRelease(KeyEvent.VK_ENTER);
-		    driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-	   
-	   }
-	
-	
+		clickOnElement(saveunit);
 	}
 
-
+	public boolean loadNewPdtPage() {
+		if (isElementDisplayed(productnamelabel)) {
+			System.out.println("Displayed Add New Product Page");
+			return true;
+		}
+		return false;
+	}
+}

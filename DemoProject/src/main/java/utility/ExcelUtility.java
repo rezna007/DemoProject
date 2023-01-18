@@ -16,11 +16,12 @@ public class ExcelUtility {
 	public static XSSFSheet sh;
 	public static FileInputStream f;
 	public static XSSFCell Cell;
+	public static String filepath = System.getProperty("user.dir");
 	
 	public ExcelUtility() throws IOException
 	{ 
 		//obtaining input bytes from a Excelfile 
-		 f =new FileInputStream("E:\\EclipseWS_Automation\\DemoProject\\src\\main\\resources\\Demo Excel.xlsx");
+		 f =new FileInputStream(filepath+"\\src\\main\\resources\\Demo Excel.xlsx");
 		//creating workbook instance that refers to .xls file  E:\EclipseWS_Automation\DemoProject\src\main\resources\Login Excel.xlsx
 		 w=new XSSFWorkbook(f);
 		//creating a Sheet object to retrieve the object  

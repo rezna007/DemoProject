@@ -17,11 +17,13 @@ import PageElements.LoginElements;
 import utility.ExcelUtility;
 import utility.LaunchBrowserUtility;
 import utility.ListenerUtility;
+import utility.PageUtilities;
 import utility.WaitUtility;
 
 public class ForgotPwd extends ListenerUtility{
 	WebDriver driver;
 	LaunchBrowserUtility objLaunchBrowserUtility = new LaunchBrowserUtility();
+	PageUtilities objPage=new PageUtilities();
 	ExcelUtility objExcelUtil;
 	LoginElements objLoginElements;
 	WaitUtility ObjWait;
@@ -32,33 +34,26 @@ public class ForgotPwd extends ListenerUtility{
 	public void TC003() throws InterruptedException {
 
 		objLoginElements.forgotpwdclick(); 
-		objLoginElements.EmailReset.sendKeys("rezna@gmail.com");
+		ObjWait.implicitWait(driver, 2000);
+		objPage.sendKey(objLoginElements.EmailReset, "rezna@gmail.com");
 		objLoginElements.sendpwdreset();
 		String actualmsgString = objLoginElements.InvalidUserEmail.getText();
-		if (actualmsgString.contains("We can't find a user with that e-mail address.")) {
-			SoftAssert sast = new SoftAssert();
-			sast.assertTrue(true);
-			sast.assertAll();
-		} else {
-			Assert.assertTrue(false);
-		}
-		
-		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+		String expectedmsgString ="We can't find a user with that e-mail address.";
+		Assert.assertEquals(actualmsgString, expectedmsgString, "Expected validation msg shown");
+//			SoftAssert sast = new SoftAssert();
+//			sast.assertEquals(actualmsgString, expectedmsgString, "Expected validation msg shown");
+//			sast.assertAll();
 	}
 
 	@Test(priority = 1, enabled = true, groups = {
 			"ForgotPwd" }, description = "Forgotpwd Invalid EmailId Format Scenario")
 	public void TC004() throws InterruptedException {
 
-		objLoginElements.EmailReset.sendKeys("rezna-gmail/com");
+		objPage.clearText(objLoginElements.EmailReset);
+		objPage.sendKey(objLoginElements.EmailReset, "rezna@gmail.com");
 		objLoginElements.sendpwdreset();
-		String tooltipmsgString = "Please include an '@' in the email address.";
-		String tooltipText = objLoginElements.EmailReset.getAttribute("title");// get tooltip text
-		if (tooltipmsgString.contains(tooltipText)) {
-			Assert.assertTrue(true);
-		}
+		Assert.assertTrue(objLoginElements.chktootip());					
 	}
-
 	@BeforeTest
 	public void beforeTest() throws Exception {
 

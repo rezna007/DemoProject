@@ -28,6 +28,7 @@ import utility.DropdownUtility;
 import utility.ExcelUtility;
 import utility.LaunchBrowserUtility;
 import utility.ListenerUtility;
+import utility.PageUtilities;
 import utility.ScrollUtility;
 import utility.WaitUtility;
 
@@ -36,11 +37,13 @@ public class ListProduct extends ListenerUtility{
 	LaunchBrowserUtility objLaunchBrowserUtility = new LaunchBrowserUtility();
 	ScrollUtility objScrollUtility = new ScrollUtility();
 	DropdownUtility objDropdown = new DropdownUtility();
+	WaitUtility objWait=new WaitUtility();
+	PageUtilities objPage=new PageUtilities();
 	ExcelUtility objExcelUtil;
 	LoginElements objLoginElements;
 	HomePageElements objHomePage;
 	ProductsElements objProductsElements;
-	WaitUtility objWait;
+
 	ListProductsElements objListpdt;
 
 	@Test(priority = 1, enabled = true, groups = {
@@ -48,48 +51,28 @@ public class ListProduct extends ListenerUtility{
 	public void TC011() throws InterruptedException, IOException, AWTException {
 		objLoginElements.loginclick();
 		objHomePage.endtourclick();
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-		objProductsElements.pdtClick();
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		objWait.waitSleep(2000);
+		objProductsElements.pdtClick();		
 		objListpdt.listpdtClick();
-		driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
-		objListpdt.searchProduct("Pdt10");
+		Assert.assertTrue(objListpdt.searchProduct("Pdt10"));		
 	}
 
 	@Test(priority = 2, enabled = true, groups = { "List Product" }, description = "Check search bar is functional")
 	public void TC012() throws InterruptedException, IOException, AWTException {
 		objListpdt.listpdtClick();
-		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-		objListpdt.searchproduct.click();
-
-		objListpdt.searchproduct.sendKeys("Pdt1");
-		objListpdt.searchproduct.sendKeys(Keys.RETURN);
-		driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
-		for (int i = 1; i <= objListpdt.productcolumn.size(); i++) {
-			String pdtname = objListpdt.productcolumn.get(i).getText();
-
-			if (pdtname.contains("Pdt1")) {
-
-				System.out.println("Product notFound");
-				Assert.assertTrue(true);
-				break;
-			}
-		}
-		System.out.println("Product Found");
+		objPage.clickOnElement(objListpdt.searchproduct);
+		objPage.sendKey(objListpdt.searchproduct, "Pdt1");
+		objPage.sendKey(objListpdt.searchproduct, Keys.RETURN);
+		objWait.waitSleep(6000);
+		Assert.assertTrue(objListpdt.searchProduct("Pdt1"));
 	}
 
 	@Test(priority = 3, enabled = true, groups = { "List Product" }, description = "Delete a Product from webtable")
 	public void TC013() throws InterruptedException, IOException, AWTException {
 		objListpdt.listpdtClick();
-		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-		objListpdt.deleteitem();
-		if (objListpdt.deletesuccessmsg.isDisplayed()) {
-			SoftAssert sast = new SoftAssert();
-			sast.assertTrue(true);
-			sast.assertAll();
-		} else {
-			Assert.assertTrue(false, "Delete item failed");
-		}
+		objWait.waitSleep(4000);
+		Assert.assertTrue(objListpdt.deleteitem());
+		
 	}
 
 	@Test(priority = 3, enabled = true, groups = {
@@ -97,16 +80,16 @@ public class ListProduct extends ListenerUtility{
 	public void TC014() throws InterruptedException, IOException, AWTException {
 
 		objListpdt.listpdtClick();
-		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+		objWait.waitSleep(4000);
 		objDropdown.dropdownbytext(objListpdt.showdropdown, "50");
-		driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
-
+		objWait.waitSleep(8000);
 		if (objListpdt.rowsize().equals("50")) {
-			System.out.println("RowSize:" + objListpdt.rowsize());
-			SoftAssert sast = new SoftAssert();
-			sast.assertTrue(true);
-			sast.assertAll();
+			System.out.println("RowSize:" + objListpdt.rowsize());			
 		} 
+		
+		SoftAssert sast = new SoftAssert();
+		sast.assertTrue(true);
+		sast.assertAll();
 	}
 
 	@Test(priority = 3, enabled = true, groups = {
@@ -114,23 +97,19 @@ public class ListProduct extends ListenerUtility{
 	public void TC015() throws InterruptedException, IOException, AWTException {
 
 		objListpdt.listpdtClick();
-		driver.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+		objWait.waitSleep(4000);
 		objListpdt.Addbtn.click();
-		driver.manage().timeouts().implicitlyWait(7, TimeUnit.SECONDS);
-		if (objProductsElements.productnamelabel.isDisplayed()) {
-			Assert.assertTrue(true);
-		} else {
-
-			Assert.assertTrue(false, "Add Product Page not loaded");
-		}
+		objWait.waitSleep(7000);
+		Assert.assertTrue(objProductsElements.loadNewPdtPage());
+		
 	}
 
 	@Test(priority = 3, enabled = true, groups = { "List Product" }, description = "Check filter functionality")
 	public void TC016() throws InterruptedException, IOException, AWTException {
 
 		objListpdt.listpdtClick();
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-		objListpdt.listPdtFilter();
+		objWait.waitSleep(3000);
+		Assert.assertTrue(objListpdt.listPdtFilter());
 	}
 
 	@BeforeTest

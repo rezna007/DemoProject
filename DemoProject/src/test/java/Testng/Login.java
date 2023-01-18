@@ -37,7 +37,7 @@ public class Login extends ListenerUtility{
 	WebDriver driver;
 	LaunchBrowserUtility objLaunchBrowserUtility = new LaunchBrowserUtility();
 	LoginElements objLoginElements;
-	WaitUtility ObjWait;
+	WaitUtility ObjWait=new WaitUtility();
 	HomePageElements objHomePage;
 	ExcelUtility objExcelUtil;
 	
@@ -49,17 +49,10 @@ public class Login extends ListenerUtility{
 	public void TC000() throws InterruptedException, IOException {
 
 		objLoginElements.loginclick();
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		ObjWait.waitSleep(3000);
 		objHomePage.endtourclick();
-		if (objHomePage.isHomePageLoaded()) {
-			Assert.assertTrue(true);
-			System.out.println("LoggedIn Successfully");
-			objHomePage.signout();
-		} else {
-			System.out.println("LogIn Failed");
-
-		}
-
+		Assert.assertTrue(objHomePage.isHomePageLoaded());
+		objHomePage.signout();
 	}
 
 	@Test(priority = 1, enabled = true,groups= {"Login"}, description = "Verifying Invalid Login Scenario")
@@ -69,17 +62,10 @@ public class Login extends ListenerUtility{
 	public void TC001() throws InterruptedException, IOException {
 
 		objLoginElements.invalidloginclick();
-		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-		if (objLoginElements.getTextOfInvalidLoginError().contains("These credentials do not match our records.")) {
-			SoftAssert sast = new SoftAssert();
-			sast.assertTrue(true);
-			System.out.println("Invalid Credentials");
-			sast.assertAll();
-		} else {
-			Assert.assertTrue(false, "Logged in with invalid credentials");
-			
-		}
+		ObjWait.waitSleep(1000);
+		Assert.assertTrue(objLoginElements.validateErrorMsg("These credentials do not match our records."));
 	}
+	
 	@Test(priority = 2, enabled = true, groups= {"Login"},description = "Verifying Incorrect Login for Allure report")
 	@Severity(SeverityLevel.BLOCKER)
 	@Description("Test Case Description: verify login with invalid credentials and validate  wrong error message")
@@ -87,16 +73,8 @@ public class Login extends ListenerUtility{
 	public void TC002() throws InterruptedException, IOException {
 		
 		objLoginElements.invalidloginclick();
-		driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
-		if (objLoginElements.getTextOfInvalidLoginError().contains("These credentials do not match our records123.")) {
-			SoftAssert sast = new SoftAssert();
-			sast.assertTrue(true);
-			System.out.println("Invalid Credentials");
-			sast.assertAll();
-		} else {
-			Assert.assertTrue(false, "Logged in with invalid credentials");
-			
-		}
+		ObjWait.waitSleep(1000);
+		Assert.assertTrue(objLoginElements.validateErrorMsg("These credentials do not match our records1234."));
 	}
 	
 	@BeforeTest
@@ -110,7 +88,7 @@ public class Login extends ListenerUtility{
 		objLoginElements = new LoginElements(driver);
 		objHomePage = new HomePageElements(driver);
 		
-
+		
 	}
 
 	@AfterTest

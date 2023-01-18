@@ -55,16 +55,8 @@ public class AddProduct extends ListenerUtility {
 		objProductsElements.addProduct("Pdt1", "21", "230");
 		String expectedsavemsg="Product added successfully";
 		String actualsavemsg=objProductsElements.pdtsavemsg.getText();
-		objWait.implicitWait(driver,2);
-		if(actualsavemsg.equals(expectedsavemsg))
-		{
-			Assert.assertTrue(true);
-			System.out.println("Product added Successfully");
-		}
-		else {
-			Assert.assertTrue(false);
-			System.out.println("Failed to add Product");
-		}
+		objWait.waitSleep(3000);
+		Assert.assertEquals(actualsavemsg, expectedsavemsg,"Product added Successfully");
 	}
 	
 
@@ -75,14 +67,14 @@ public class AddProduct extends ListenerUtility {
 		objProductsElements.addProduct("", "21", "230");
 		//objScrollUtility.scrollToElement(objProductsElements.productname);
 		objWait.waitForElementTobeVisible(driver, objProductsElements.productname, 3);
-		objProductsElements.validateErrorMsg(objProductsElements.productnameerror);
+		Assert.assertTrue(objProductsElements.validateErrorMsg(objProductsElements.productnameerror));
 	}
 
 	@Test(priority = 3, enabled = true,groups= {"AddProduct"}, description = "Validate mandatory fields-without AlertQnty")
 	public void TC007() throws InterruptedException, IOException, AWTException {
 		objProductsElements.addpdtClick();
 		objProductsElements.addProduct("Pdt2", "", "230");
-		objProductsElements.validateErrorMsg(objProductsElements.alertqntyerror);
+		Assert.assertTrue(objProductsElements.validateErrorMsg(objProductsElements.alertqntyerror));
 	}
 
 	@Test(priority = 4, enabled = true,groups= {"AddProduct"}, description = "Validate mandatory fields-without Tax")
@@ -90,19 +82,23 @@ public class AddProduct extends ListenerUtility {
 
 		objProductsElements.addpdtClick();
 		objProductsElements.addProduct("Pdt2", "5", "");
-		objProductsElements.validateErrorMsg(objProductsElements.exctax0error);
+		Assert.assertTrue(objProductsElements.validateErrorMsg(objProductsElements.exctax0error));
 		}
+	
 	@Test(priority = 5, enabled = true,groups= {"AddProduct"}, description = "Add a new Brand")
 	public void TC009() throws InterruptedException, IOException, AWTException {
 
 		objProductsElements.addpdtClick();
 		objProductsElements.addBrand("EdgeBrand"," Edgenullgjdg");
+		Assert.assertTrue(true);
 		}
+	
 	@Test(priority = 6, enabled = true, groups= {"AddProduct"},description = "Add a new Unit")
 	public void TC010() throws InterruptedException, IOException, AWTException {
-		objWait.implicitWait(driver,4);
+		objWait.waitSleep(4000);
 		objProductsElements.addpdtClick();
 		objProductsElements.addUnit("EdgeUnit"," EdgeBoxUnit");
+		Assert.assertTrue(true);
 		}
 	
 	@BeforeTest

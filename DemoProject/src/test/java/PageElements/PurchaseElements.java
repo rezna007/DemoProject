@@ -1,5 +1,7 @@
 package PageElements;
 
+import static org.testng.Assert.assertTrue;
+
 import java.awt.AWTException;
 import java.io.IOException;
 import java.util.List;
@@ -14,19 +16,18 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import utility.DropdownUtility;
+import utility.PageUtilities;
+import utility.WaitUtility;
 
-public class PurchaseElements {
+public class PurchaseElements extends PageUtilities {
 	WebDriver driver;
-	ProductsElements objProductsElements;
-	DropdownUtility objDropdown;
-
-
+	WaitUtility objWait= new WaitUtility();
+	
 public PurchaseElements(WebDriver driver) 
 {
 	this.driver = driver;
 	PageFactory.initElements(driver, this);
 }
-
 
 @FindBy(xpath = "//*[@id=\"tour_step6_menu\"]")
 public WebElement purchase;
@@ -98,120 +99,117 @@ public WebElement savePurchasemsg;
 
 public void purchaseClick()
 {
-	purchase.click();
+	clickOnElement(purchase);	
 }
 public void addpurchaseClick()
 {
-	addpurchase.click();
+	clickOnElement(addpurchase);	
 }
 public void addProduct(String name,String qnty,String tax) throws InterruptedException, IOException, AWTException {	
 
-	productname.sendKeys(name);	
-	Thread.sleep(2000);
+	sendKey(productname,name);	
+	objWait.waitSleep(2000);
 	unitDetails();	
-	Thread.sleep(6000);
+	objWait.waitSleep(6000);
 	alertQnty(qnty);
-	Thread.sleep(3000);
+	objWait.waitSleep(3000);
 	taxDetails(tax);
 	save();
-	Thread.sleep(6000);
+	objWait.waitSleep(6000);
 }
 public void addPurchase() throws InterruptedException
 { 
 	selectSupplier(); 
 	selectPurchasestatus() ;
 	selectBussinesslocation();
-	amount.sendKeys("250");
-	savePurchase.click();
-	
+	sendKey(amount,"250");
+	clickOnElement(savePurchase);
 }
 public void addPurchaseWithoutSupplier() throws InterruptedException
 { 
 	selectPurchasestatus() ;
 	selectBussinesslocation();
-	amount.sendKeys("250");
-	savePurchase.click();
-	Thread.sleep(2000);
+	sendKey(amount,"158");
+	clickOnElement(savePurchase);
+	objWait.waitSleep(2000);
 }
 
 public void addPurchaseWithoutPurchasestatus() throws InterruptedException
 { 	
 	selectSupplier() ;
-	purchasestatus.click();
-	Thread.sleep(3000);
-	selectpurchsestatus1.click();
+	clickOnElement(purchasestatus);
+	objWait.waitSleep(3000);
+	clickOnElement(selectpurchsestatus1);
 	selectBussinesslocation();
-	amount.sendKeys("250");
-	savePurchase.click();
-	Thread.sleep(3000);
+	sendKey(amount,"458");
+	clickOnElement(savePurchase);
+	objWait.waitSleep(3000);
 }
 public void addPurchaseWithoutPBussinesslocation() throws InterruptedException
 { 
 	selectSupplier() ;
 	selectPurchasestatus() ;
-	bussinesslocation.click();
-	bussinesslocationsearch.click();
-	Thread.sleep(3000);
-	selectbussinesslocation1.click();
-	Thread.sleep(3000);
-	amount.sendKeys("250");
-	savePurchase.click();
-	Thread.sleep(2000);
+	clickOnElement(bussinesslocation);
+	clickOnElement(bussinesslocationsearch);
+	objWait.waitSleep(3000);
+	clickOnElement(selectbussinesslocation1);
+	objWait.waitSleep(3000);
+	sendKey(amount,"236");
+	clickOnElement(savePurchase);
+	objWait.waitSleep(2000);
 }
 public void selectSupplier() throws InterruptedException
 {
-supplier.click();
-Thread.sleep(3000);
-suppliersearch.click();
-suppliersearch.sendKeys("V");
-Thread.sleep(6000);
-selectsupplier.click();
-Thread.sleep(3000);
+clickOnElement(supplier);
+objWait.waitSleep(2000);
+clickOnElement(suppliersearch);
+sendKey(suppliersearch,"V");
+objWait.waitSleep(6000);
+clickOnElement(selectsupplier);
+objWait.waitSleep(3000);
 }
 public void selectPurchasestatus() throws InterruptedException
 {
-	purchasestatus.click();
-	Thread.sleep(3000);
-	selectpurchsestatus.click();
+	clickOnElement(purchasestatus);
+	objWait.waitSleep(3000);
+	clickOnElement(selectpurchsestatus);	
 }
 public void selectBussinesslocation() throws InterruptedException
 {
-	bussinesslocation.click();
-	bussinesslocationsearch.click();
-	Thread.sleep(3000);
-	selectbussinesslocation.click();
-	Thread.sleep(3000);
+	clickOnElement(bussinesslocation);
+	clickOnElement(bussinesslocationsearch);
+	objWait.waitSleep(3000);
+	clickOnElement(selectbussinesslocation);
+	objWait.waitSleep(3000);
 }
 public void unitDetails()
 {
-	unit.click();
-	selectunit.click();
+	clickOnElement(unit);
+	clickOnElement(selectunit);
 }
 public void alertQnty(String qnty)
 { 
-	alertqnty.sendKeys(qnty);
+	sendKey(alertqnty,qnty);
+	
 }
 public void taxDetails(String tax) throws InterruptedException
 {	
-	exctax0.sendKeys(tax);		
-	inctax.sendKeys(tax);		
-	exctax1.sendKeys(tax);
-	
+	sendKey(exctax0,tax);
+	sendKey(inctax,tax);
+	sendKey(exctax1,tax);	
 }
 public void save()
 {
-	save.click();
+	clickOnElement(save);	
 }
-public void validateErrorMsg(WebElement element) throws InterruptedException
+public boolean validateErrorMsg(WebElement element) throws InterruptedException
 {
-	if (element.getText().equals("This field is required.")) {
-		SoftAssert softAssert = new SoftAssert();
-		softAssert.assertTrue(true);
-		softAssert.assertAll();
-	} else {
-
-		Assert.assertTrue(false);
-	}
-	
+	if (getElementText(element).equals("This field is required.")) {
+		
+		System.out.println("Manadatory field validation message shown");
+		return true;
+	} 
+	return false;
 }
+
 }

@@ -45,6 +45,15 @@ public class WaitUtility {
 	        wait.until(ExpectedConditions.textToBePresentInElementValue(element, text));
 	        return (driver);
 	    }
+	    
+
+	    
+	    public void fluentWait(WebDriver driver, WebElement element) {
+			Wait<WebDriver> fwait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofMillis(5000))
+					.pollingEvery(Duration.ofMillis(250)).ignoring(NoSuchElementException.class);
+			fwait.until(ExpectedConditions.visibilityOf(element));
+		}
+
 	    public void waitSleep(long duration) {
 	        try {
 	            Thread.sleep(duration);
@@ -54,5 +63,16 @@ public class WaitUtility {
 	        }
 	    }
 
-		
+//	    public void fluentWait(WebDriver driver,long i,long j)
+//	    {
+//	    	Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(i))
+//					.pollingEvery(Duration.ofSeconds(j)).ignoring(NoSuchElementException.class);
+//			WebElement ele= wait.until(new Function<WebDriver, WebElement>() {
+//
+//				public WebElement apply(WebDriver driver) {
+//					//in this method defined our own subjected conditions for which we need to wait for  					
+//					return driver.findElement(By.xpath(""));
+//				}
+//			});
+//	    }	
 }
